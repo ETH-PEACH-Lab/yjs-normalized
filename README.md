@@ -15,11 +15,11 @@ Example structure:
             "abc":{
                 "id":"abc"
             },
-            ...
+           /** ... **/
         },
-        allIds:["abc",...]
+        "allIds":["abc"/** ,... **/]
     },
-    ...
+    /** ... **/
 }
 ```
 
