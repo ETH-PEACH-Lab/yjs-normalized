@@ -15,11 +15,9 @@ Example structure:
             "abc":{
                 "id":"abc"
             },
-           /** ... **/
         },
-        "allIds":["abc"/** ,... **/]
-    },
-    /** ... **/
+        "allIds":["abc"]
+    }
 }
 ```
 
@@ -59,11 +57,11 @@ The RootObserver class is an abstract class that primarily functions as a root d
 
 The class defines several abstract dispatcher methods (rootDispatcher, addDispatcher, deleteDispatcher, updatePropertyDispatcher, and allIdsDispatcher) that subclasses must implement to handle various types of data updates. 
 These methods enable dispatching events accordingly.
--Root Dispatcher: Dispatches the entire normalized state.
--Add Dispatcher: Dispatches an event to add an object.
--Delete Dispatcher: Dispatches an event to delete an object by its Id.
--Update Property Dispatcher: Dispatches an event to update a specific property of an object.
--All Ids Dispatcher: Dispatches an event to update the list of all object ids.
+- Root Dispatcher: Dispatches the entire normalized state.
+- Add Dispatcher: Dispatches an event to add an object.
+- Delete Dispatcher: Dispatches an event to delete an object by its id.
+- Update Property Dispatcher: Dispatches an event to update a specific property of an object.
+- All Ids Dispatcher: Dispatches an event to update the list of all object ids.
 ### Sub-observers
 Sub-Observers are managed by the library itself. Following sub-observers are created / deleted and listened to during runtime: 
 - AllIdsObserver: Observes Changes in the order of the ``allIds`` Y.Array
