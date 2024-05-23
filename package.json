@@ -1,0 +1,65 @@
+{
+  "name": "yjs-normalized",
+  "version": "0.0.1",
+  "description": "Yjs extension that offers generic maintainer and observer classes for normalized semi-structured data",
+  "type": "module",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky",
+    "build": "tsc && vite build",
+    "lint": "eslint src/",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:quiet": "npm run lint -- --quiet",
+    "prettier": "npx prettier --check --config .prettierrc.json src",
+    "prettier:fix": "npm run prettier -- --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ETH-PEACH-Lab/yjs-normalized.git"
+  },
+  "keywords": [
+    "yjs",
+    "typescirpt",
+    "normalized",
+    "semi-structured",
+    "data"
+  ],
+  "author": "Pascal Linder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ETH-PEACH-Lab/yjs-normalized/issues"
+  },
+  "homepage": "https://github.com/ETH-PEACH-Lab/yjs-normalized#readme",
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@eslint/eslintrc": "^3.0.2",
+    "@eslint/js": "^9.1.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "globals": "^15.0.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "3.2.5",
+    "vite": "^5.2.10",
+    "vite-plugin-dts": "^3.8.3"
+  },
+  "dependencies": {
+    "yjs": "^13.6.15"
+  },
+  "peerDependencies": {
+    "yjs": "*"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run prettier:fix",
+      "npm run lint:fix"
+    ]
+  }
+}
