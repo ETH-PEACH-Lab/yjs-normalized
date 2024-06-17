@@ -3,6 +3,13 @@ import { ByIdObserver } from './ByIdObserver';
 import { YObserver } from './YObserver';
 import { AllIdsObserver } from './AllIdsObserver';
 import { type INormalizedState } from '../types/INormalizedState';
+import {
+  type AddDispatch,
+  type AllIdsDispatch,
+  type DeleteDispatch,
+  type RootDispatch,
+  type UpdatePropertyDispatch,
+} from '../types';
 
 export abstract class RootObserver<T> extends YObserver {
   dispose: () => void = () => {
@@ -10,9 +17,8 @@ export abstract class RootObserver<T> extends YObserver {
     this._byIdObserver?.dispose();
   };
 
-  constructor(data: Y.Map<any>) {
-    super();
-
+  constructor(data: Y.Map<any>, documentIdentifier?: string) {
+    super(documentIdentifier);
     data.observe(this.dispatch.bind(this));
     this._unobserve = () => {
       data.unobserve(this.dispatch);
@@ -29,9 +35,24 @@ export abstract class RootObserver<T> extends YObserver {
       ) {
         this._byIdObserver = new ByIdObserver<T>(
           event.target.get('byId') as Y.Map<any>,
-          this.addDispatcher,
-          this.deleteDispatcher,
-          this.updatePropertyDispatcher,
+          (payload: T) => {
+            this.addDispatcher({
+              item: payload,
+              documentIdentifier: this.documentIdentifier,
+            });
+          },
+          (payload: string) => {
+            this.deleteDispatcher({
+              id: payload,
+              documentIdentifier: this.documentIdentifier,
+            });
+          },
+          (payload: { id: string; key: string; value: any }) => {
+            this.updatePropertyDispatcher({
+              ...payload,
+              documentIdentifier: this.documentIdentifier,
+            });
+          },
         );
       }
       if (
@@ -40,25 +61,29 @@ export abstract class RootObserver<T> extends YObserver {
       ) {
         this._allIdsObserver = new AllIdsObserver(
           event.target.get('allIds') as Y.Array<string>,
-          this.allIdsDispatcher,
+          (payload: string[]) => {
+            this.allIdsDispatcher({
+              ids: payload,
+              documentIdentifier: this.documentIdentifier,
+            });
+          },
         );
       }
-      this.rootDispatcher(
-        structuredClone(event.target.toJSON()) as INormalizedState<T>,
-      );
+      this.rootDispatcher({
+        state: structuredClone(event.target.toJSON()) as INormalizedState<T>,
+        documentIdentifier: this.documentIdentifier,
+      });
     }
   };
 
-  protected abstract rootDispatcher: (payload: INormalizedState<T>) => void;
-  protected abstract addDispatcher: (payload: T) => void;
-  protected abstract deleteDispatcher: (payload: string) => void;
-  protected abstract updatePropertyDispatcher: (payload: {
-    id: string;
-    key: string;
-    value: any;
-  }) => void;
+  protected abstract rootDispatcher: (payload: RootDispatch<T>) => void;
+  protected abstract addDispatcher: (payload: AddDispatch<T>) => void;
+  protected abstract deleteDispatcher: (payload: DeleteDispatch) => void;
+  protected abstract updatePropertyDispatcher: (
+    payload: UpdatePropertyDispatch,
+  ) => void;
 
-  protected abstract allIdsDispatcher: (payload: string[]) => void;
+  protected abstract allIdsDispatcher: (payload: AllIdsDispatch) => void;
 
   private _byIdObserver: ByIdObserver<T> | undefined;
   private _allIdsObserver: AllIdsObserver | undefined;

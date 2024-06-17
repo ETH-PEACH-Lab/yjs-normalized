@@ -72,19 +72,19 @@ Sub-Observers are managed by the library itself. Following sub-observers are cre
 Users can integrate this class with their preferred state management library (e.g., Redux, MobX).
 ```typescript
 export class CellsObserver extends RootObserver<ICell> {
-    protected rootDispatcher: (payload: INormalizedState<ICell>) => void = (payload) => {
+    protected rootDispatcher: (payload: RootDispatch) => void = (payload) => {
         //store.dispatch(setCells(payload))
     }
-    protected addDispatcher: (payload: ICell) => void = (payload) => {
+    protected addDispatcher: (payload: AddDispatch) => void = (payload) => {
         //store.dispatch(addCell(payload))
     };
-    protected deleteDispatcher: (payload: string) => void = (payload) => {
+    protected deleteDispatcher: (payload: DeleteDispatch) => void = (payload) => {
         //store.dispatch(deleteCell(payload))
     };
-    protected updatePropertyDispatcher: (payload: {id: string, key: string, value:any}) => void = (payload) =>{
+    protected updatePropertyDispatcher: (payload: UpdatePropertyDispatch) => void = (payload) =>{
         //store.dispatch(updateCellProperty(payload))
     };
-    protected allIdsDispatcher: (payload: string[]) => void = (payload) => {
+    protected allIdsDispatcher: (payload: AllIdsDispatch) => void = (payload) => {
         //store.dispatch(updateCellsAllIds(payload))
     };
 }

@@ -9,8 +9,9 @@ export class ObjectObserver extends YObserver {
       key: string;
       value: any;
     }) => void,
+    documentIdentifier?: string,
   ) {
-    super();
+    super(documentIdentifier);
     object.observe(this.dispatch.bind(this));
     this._unobserve = () => {
       object.unobserve(this.dispatch);
