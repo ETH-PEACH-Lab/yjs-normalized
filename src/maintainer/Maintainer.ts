@@ -43,8 +43,14 @@ export class Maintainer<T extends { id: string }> {
     if (tempObject === undefined) return;
     this._transact(() => {
       Object.entries(object).forEach(([key, value]) => {
-        if (tempObject.get(key) !== value) {
-          tempObject.set(key, value);
+        if (Array.isArray(tempObject.get(key))) {
+          if (JSON.stringify(tempObject.get(key)) !== JSON.stringify(value)) {
+            tempObject.set(key, value);
+          }
+        } else {
+          if (tempObject.get(key) !== value) {
+            tempObject.set(key, value);
+          }
         }
       });
     });

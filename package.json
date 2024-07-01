@@ -1,6 +1,6 @@
 {
   "name": "yjs-normalized",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Yjs extension that offers generic maintainer and observer classes for normalized semi-structured data",
   "type": "module",
   "main": "dist/index.cjs.js",
