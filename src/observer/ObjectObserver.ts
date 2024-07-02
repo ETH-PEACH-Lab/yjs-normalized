@@ -20,7 +20,11 @@ export class ObjectObserver extends YObserver {
   }
 
   dispose: () => void = () => {
-    this._unobserve();
+    try {
+      this._unobserve();
+    } catch {
+      console.debug('ObjectObserver already disposed');
+    }
   };
 
   protected dispatch: (event: Y.YMapEvent<any>) => void = (

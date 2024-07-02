@@ -25,7 +25,11 @@ export class AllIdsObserver {
   };
 
   public dispose: () => void = () => {
-    this._unobserve();
+    try {
+      this._unobserve();
+    } catch {
+      console.debug('AllIdsObserver already disposed');
+    }
   };
 
   private readonly _unobserve: () => void;

@@ -13,7 +13,11 @@ import {
 
 export abstract class RootObserver<T> extends YObserver {
   dispose: () => void = () => {
-    this._unobserve();
+    try {
+      this._unobserve();
+    } catch {
+      console.debug('RootObserver already disposed');
+    }
     this._byIdObserver?.dispose();
   };
 

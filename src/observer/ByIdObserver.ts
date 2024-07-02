@@ -30,7 +30,11 @@ export class ByIdObserver<T> extends YObserver {
   }
 
   dispose: () => void = () => {
-    this._unobserve();
+    try {
+      this._unobserve();
+    } catch {
+      console.debug('ByIdObserver already disposed');
+    }
     this._objectObservers.forEach((observer) => {
       observer.dispose();
     });
